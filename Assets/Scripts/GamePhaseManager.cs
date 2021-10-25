@@ -23,6 +23,9 @@ public class GamePhaseManager : MonoBehaviour
     public List<TileBehavior> TilesToShock = new List<TileBehavior>();
     public List<TileBehavior> PowerupTiles = new List<TileBehavior>();
 
+    public List<GeneratorUpdate> RowGenerators = new List<GeneratorUpdate>();
+    public List<GeneratorUpdate> ColumnGenerators = new List<GeneratorUpdate>();
+
     public void Start()
     {
         Round = 1;
@@ -80,6 +83,14 @@ public class GamePhaseManager : MonoBehaviour
         {
             tile.AddPowerup("none");
         }
+        foreach (GeneratorUpdate rowGen in RowGenerators)
+        {
+            rowGen.MR.material = rowGen.NormalMaterial;
+        }
+        foreach (GeneratorUpdate colGen in ColumnGenerators)
+        {
+            colGen.MR.material = colGen.NormalMaterial;
+        }
         TilesToShock.Clear();
         PowerupTiles.Clear();
         ChosenRows.Clear();
@@ -107,8 +118,8 @@ public class GamePhaseManager : MonoBehaviour
             // else rows and columns are maxed, do nothing because there is only one safe tile as is
         }
 
-        // Place a powerup tile every two turns
-        if ((round - 1) % 2 == 0)
+        // Place a powerup tile every six turns
+        if ((round - 1) % 6 == 0 && round != 1)
         {
             int powerupRow = Random.Range(0, GridSize);
             int powerupColumn = Random.Range(0, GridSize);
@@ -130,7 +141,9 @@ public class GamePhaseManager : MonoBehaviour
                 chosenRow = (chosenRow + 1) % GridSize;
             }
             ChosenRows.Add(chosenRow);
-            
+
+            RowGenerators[chosenRow].MR.material = RowGenerators[chosenRow].ShockMaterial;
+
             for (int col = 0; col < GridSize; col++)
             {
                 TileBehavior chosenTile;
@@ -152,6 +165,8 @@ public class GamePhaseManager : MonoBehaviour
                 chosenCol = (chosenCol + 1) % GridSize;
             }
             ChosenColumns.Add(chosenCol);
+
+            ColumnGenerators[chosenCol].MR.material = ColumnGenerators[chosenCol].ShockMaterial;
 
             for (int row = 0; row < GridSize; row++)
             {
