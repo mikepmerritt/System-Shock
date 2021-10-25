@@ -11,6 +11,7 @@ public class TileBehavior : MonoBehaviour
     public string Powerup; // the powerup on the tile
     public MeshRenderer MR;
     public Material NormalMaterial, ShockMaterial, BlueMaterial, RedMaterial;
+    public GameObject Shockbox, PowerupSprite;
 
     public void UpdateTileStatus (string newStatus)
     {
@@ -18,18 +19,22 @@ public class TileBehavior : MonoBehaviour
         if(TileStatus.Equals("normal") || TileStatus.Equals("danger"))
         {
             MR.material = NormalMaterial;
+            Shockbox.SetActive(false);
         }
         else if (TileStatus.Equals("neutral_shock"))
         {
             MR.material = ShockMaterial;
+            Shockbox.SetActive(true);
         }
         else if (TileStatus.Equals("player_shock_blue"))
         {
             MR.material = BlueMaterial;
+            Shockbox.SetActive(true);
         }
         else if (TileStatus.Equals("player_shock_red"))
         {
             MR.material = RedMaterial;
+            Shockbox.SetActive(true);
         }
     }
 
@@ -38,7 +43,12 @@ public class TileBehavior : MonoBehaviour
         Powerup = powerup;
         if (Powerup.Equals("lightning"))
         {
-            // do something
+            PowerupSprite.SetActive(true);
+            // TODO: add code to set the sprite image once we add other powerups
+        }
+        else if (Powerup.Equals("none"))
+        {
+            PowerupSprite.SetActive(false);
         }
     }
 
