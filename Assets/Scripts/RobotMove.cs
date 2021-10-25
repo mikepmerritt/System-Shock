@@ -6,6 +6,7 @@ public class RobotMove : MonoBehaviour
 {
     public float PlayerSpeed;
     public float MaxX, MaxZ;
+    public int PowerupCharges;
 
     void Update()
     {
@@ -43,5 +44,17 @@ public class RobotMove : MonoBehaviour
 
         Vector3 totalMovement = (transform.forward * forwardMovement) + (transform.right * strafeMovement);
         transform.position += totalMovement;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("ShockCollider"))
+        {
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("PowerupCollider"))
+        {
+            PowerupCharges++;
+        }
     }
 }

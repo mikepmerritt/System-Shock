@@ -11,7 +11,7 @@ public class GamePhaseManager : MonoBehaviour
     public float PreshockTimer;
     public float ShockLength;
     public float ShockTimer;
-    public bool InShockPhase;
+    public static bool InShockPhase;
 
     public int ShockRows;
     public int ShockColumns;
@@ -52,6 +52,7 @@ public class GamePhaseManager : MonoBehaviour
         {
             InShockPhase = true;
             ShockTimer = ShockLength;
+            ToggleAllPowerupTriggers(true);
             ShockDangerTiles();
         }
         else if (InShockPhase && ShockTimer > 0) // shock phase, no player movement allowed
@@ -64,6 +65,7 @@ public class GamePhaseManager : MonoBehaviour
             PreshockTimer = PreshockLength;
             Round++;
             ChooseTiles(Round);
+            ToggleAllPowerupTriggers(false);
         }
     }
 
@@ -169,6 +171,14 @@ public class GamePhaseManager : MonoBehaviour
         foreach (TileBehavior tile in TilesToShock)
         {
             tile.UpdateTileStatus("neutral_shock");
+        }
+    }
+
+    public void ToggleAllPowerupTriggers(bool value)
+    {
+        foreach (TileBehavior tile in PowerupTiles)
+        {
+            tile.Powerupbox.SetActive(value);
         }
     }
 }

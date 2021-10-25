@@ -11,7 +11,7 @@ public class TileBehavior : MonoBehaviour
     public string Powerup; // the powerup on the tile
     public MeshRenderer MR;
     public Material NormalMaterial, ShockMaterial, BlueMaterial, RedMaterial;
-    public GameObject Shockbox, PowerupSprite;
+    public GameObject Shockbox, Powerupbox, PowerupSprite;
 
     public void UpdateTileStatus (string newStatus)
     {

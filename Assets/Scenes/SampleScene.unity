@@ -1089,11 +1089,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Round: 1
-  PreshockLength: 1
+  PreshockLength: 3
   PreshockTimer: 0
-  ShockLength: 1
+  ShockLength: 3
   ShockTimer: 0
-  InShockPhase: 0
   ShockRows: 0
   ShockColumns: 0
   GridSize: 4
