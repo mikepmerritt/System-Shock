@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GamePhaseManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class GamePhaseManager : MonoBehaviour
 
     public List<GeneratorUpdate> RowGenerators = new List<GeneratorUpdate>();
     public List<GeneratorUpdate> ColumnGenerators = new List<GeneratorUpdate>();
+
+    public TMP_Text P1Charges, P2Charges, RoundText;
 
     public void Start()
     {
@@ -68,6 +71,9 @@ public class GamePhaseManager : MonoBehaviour
             InShockPhase = false;
             PreshockTimer = PreshockLength;
             Round++;
+            P1Charges.SetText("P1 Charges: " + P1Move.PowerupCharges);
+            P2Charges.SetText("P2 Charges: " + P2Move.PowerupCharges);
+            RoundText.SetText("Round " + Round);
             ChooseTiles(Round);
             ToggleAllPowerupTriggers(false);
         }

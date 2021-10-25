@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class P2CursorMove : MonoBehaviour
 {
     public float CursorSpeed;
     public float MaxX, MaxZ;
+    public TMP_Text ChargeCounter;
 
     void Update()
     {
@@ -61,6 +63,7 @@ public class P2CursorMove : MonoBehaviour
                         tile.UpdateTileStatus("player_shock_red");
                         GamePhaseManager.PlayerShockedTiles.Add(tile);
                         P2Move.PowerupCharges--;
+                        ChargeCounter.SetText("P2 Charges: " + P2Move.PowerupCharges);
                     }
                     else
                     {

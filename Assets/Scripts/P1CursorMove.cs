@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class P1CursorMove : MonoBehaviour
 {
     public float CursorSpeed;
     public float MaxX, MaxZ;
+    public TMP_Text ChargeCounter;
 
     void Update()
     {
@@ -61,6 +63,7 @@ public class P1CursorMove : MonoBehaviour
                         tile.UpdateTileStatus("player_shock_blue");
                         GamePhaseManager.PlayerShockedTiles.Add(tile);
                         P1Move.PowerupCharges--;
+                        ChargeCounter.SetText("P1 Charges: " + P1Move.PowerupCharges);
                     }
                     else
                     {
