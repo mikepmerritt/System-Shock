@@ -22,6 +22,7 @@ public class GamePhaseManager : MonoBehaviour
     public List<int> ChosenColumns;
     public List<TileBehavior> TilesToShock = new List<TileBehavior>();
     public List<TileBehavior> PowerupTiles = new List<TileBehavior>();
+    public static List<TileBehavior> PlayerShockedTiles = new List<TileBehavior>();
 
     public List<GeneratorUpdate> RowGenerators = new List<GeneratorUpdate>();
     public List<GeneratorUpdate> ColumnGenerators = new List<GeneratorUpdate>();
@@ -83,6 +84,10 @@ public class GamePhaseManager : MonoBehaviour
         {
             tile.AddPowerup("none");
         }
+        foreach (TileBehavior tile in PlayerShockedTiles)
+        {
+            tile.UpdateTileStatus("normal");
+        }
         foreach (GeneratorUpdate rowGen in RowGenerators)
         {
             rowGen.MR.material = rowGen.NormalMaterial;
@@ -93,6 +98,7 @@ public class GamePhaseManager : MonoBehaviour
         }
         TilesToShock.Clear();
         PowerupTiles.Clear();
+        PlayerShockedTiles.Clear();
         ChosenRows.Clear();
         ChosenColumns.Clear();
 

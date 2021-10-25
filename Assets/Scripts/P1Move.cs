@@ -6,11 +6,10 @@ public class P1Move : MonoBehaviour
 {
     public float PlayerSpeed;
     public float MaxX, MaxZ;
-    public int PowerupCharges;
+    public static int PowerupCharges;
 
     void Update()
     {
-
         // Player movement
         float forwardMovement = 0f;
         float strafeMovement = 0f;
