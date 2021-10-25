@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7563267816260691063}
   - component: {fileID: 1097341658834596360}
   - component: {fileID: 7331081343115985983}
+  - component: {fileID: 1399730543698076615}
   m_Layer: 0
   m_Name: Floor Tile
   m_TagString: Untagged
@@ -95,3 +96,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1399730543698076615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599697899589894714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd59cf20bdf85f84189907aa5e0082b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Row: 0
+  Column: 0
+  TileStatus: normal
+  Powerup: none
+  MR: {fileID: 1097341658834596360}
+  NormalMaterial: {fileID: 2100000, guid: d90c25ab8e388a34e920a4053ecf5d21, type: 2}
+  ShockMaterial: {fileID: 2100000, guid: 1da99218a19c27248a93ce7e6ba3fe18, type: 2}
+  BlueMaterial: {fileID: 2100000, guid: dca22930ad2c927408ad06932493d7c1, type: 2}
+  RedMaterial: {fileID: 2100000, guid: 9854c43c8d904714d98e2eb02f3ccf40, type: 2}
