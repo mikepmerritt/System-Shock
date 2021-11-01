@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class P1CursorMove : MonoBehaviour
+public class CursorMove : MonoBehaviour
 {
     public float CursorSpeed;
     public float MaxX, MaxZ;
     public TMP_Text ChargeCounter;
+    private string PlayerNumber;
+    private string InputIdentifier; // the string used in the axis name
+    private string PlayerColor;
+    public PlayerMove CorrespondingPlayer;
 
-    void Update()
+    private void Start()
+    {
+        CorrespondingPlayer.SetupInputIdentifier();
+        PlayerNumber = CorrespondingPlayer.PlayerNumber;
+        InputIdentifier = CorrespondingPlayer.InputIdentifier;
+    }
+
+    private void Update()
     {
 
         // Cursor movement
@@ -19,11 +30,11 @@ public class P1CursorMove : MonoBehaviour
         // Check to keep cursor in back and front of arena
         if (Mathf.Abs(transform.position.z) < MaxZ)
         {
-            forwardCursorMovement = Input.GetAxis("P1CursorVert") * CursorSpeed * Time.deltaTime;
+            forwardCursorMovement = Input.GetAxis(InputIdentifier + "CursorVert") * CursorSpeed * Time.deltaTime;
         }
         else
         {
-            float inputCursorMovement = Input.GetAxis("P1CursorVert") * CursorSpeed * Time.deltaTime;
+            float inputCursorMovement = Input.GetAxis(InputIdentifier + "CursorVert") * CursorSpeed * Time.deltaTime;
             if (Mathf.Abs(transform.position.z + inputCursorMovement) < Mathf.Abs(transform.position.z))
             {
                 forwardCursorMovement = inputCursorMovement;
@@ -33,11 +44,11 @@ public class P1CursorMove : MonoBehaviour
         // Check to keep cursor in left and right of arena
         if (Mathf.Abs(transform.position.x) < MaxX)
         {
-            strafeCursorMovement = Input.GetAxis("P1CursorHoriz") * CursorSpeed * Time.deltaTime;
+            strafeCursorMovement = Input.GetAxis(InputIdentifier + "CursorHoriz") * CursorSpeed * Time.deltaTime;
         }
         else
         {
-            float inputCursorMovement = Input.GetAxis("P1CursorHoriz") * CursorSpeed * Time.deltaTime;
+            float inputCursorMovement = Input.GetAxis(InputIdentifier + "CursorHoriz") * CursorSpeed * Time.deltaTime;
             if (Mathf.Abs(transform.position.x + inputCursorMovement) < Mathf.Abs(transform.position.x))
             {
                 strafeCursorMovement = inputCursorMovement;
@@ -48,7 +59,7 @@ public class P1CursorMove : MonoBehaviour
         transform.position += totalCursorMovement;
 
         // Use button
-        if (Input.GetAxis("P1Use") == 1 && P1Move.PowerupCharges > 0)
+        if (Input.GetAxis(InputIdentifier + "Use") == 1 && CorrespondingPlayer.PowerupCharges > 0)
         {
             RaycastHit hit;
 
@@ -60,10 +71,10 @@ public class P1CursorMove : MonoBehaviour
                     TileBehavior tile = hitObject.GetComponent<TileBehavior>();
                     if (tile != null)
                     {
-                        tile.UpdateTileStatus("player_shock_blue");
+                        tile.UpdateTileStatus("player_shock_" + PlayerColor);
                         GamePhaseManager.PlayerShockedTiles.Add(tile);
-                        P1Move.PowerupCharges--;
-                        ChargeCounter.SetText("P1 Charges: " + P1Move.PowerupCharges);
+                        CorrespondingPlayer.PowerupCharges--;
+                        ChargeCounter.SetText("P" + PlayerNumber + " Charges: " + CorrespondingPlayer.PowerupCharges);
                     }
                     else
                     {

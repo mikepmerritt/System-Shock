@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P2Move : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     public float PlayerSpeed;
     public float MaxX, MaxZ;
-    public static int PowerupCharges;
+    public int PowerupCharges;
+    public string PlayerNumber;
+    public string ControllerType;
+    public string InputIdentifier; // the string used in the axis name
+    public string InputNumber; // 0 is for keyboard
 
-    void Update()
+    private void Start()
+    {
+        SetupInputIdentifier();
+    }
+
+    private void Update()
     {
         // Player movement
         float forwardMovement = 0f;
@@ -17,11 +26,11 @@ public class P2Move : MonoBehaviour
         // Check to keep robot in back and front of arena
         if (Mathf.Abs(transform.position.z) < MaxZ)
         {
-            forwardMovement = Input.GetAxis("P2Vert") * PlayerSpeed * Time.deltaTime;
+            forwardMovement = Input.GetAxis(InputIdentifier + "Vert") * PlayerSpeed * Time.deltaTime;
         }
         else
         {
-            float inputMovement = Input.GetAxis("P2Vert") * PlayerSpeed * Time.deltaTime;
+            float inputMovement = Input.GetAxis(InputIdentifier + "Vert") * PlayerSpeed * Time.deltaTime;
             if (Mathf.Abs(transform.position.z + inputMovement) < Mathf.Abs(transform.position.z))
             {
                 forwardMovement = inputMovement;
@@ -31,11 +40,11 @@ public class P2Move : MonoBehaviour
         // Check to keep robot in left and right of arena
         if (Mathf.Abs(transform.position.x) < MaxX)
         {
-            strafeMovement = Input.GetAxis("P2Horiz") * PlayerSpeed * Time.deltaTime;
+            strafeMovement = Input.GetAxis(InputIdentifier + "Horiz") * PlayerSpeed * Time.deltaTime;
         }
         else
         {
-            float inputMovement = Input.GetAxis("P2Horiz") * PlayerSpeed * Time.deltaTime;
+            float inputMovement = Input.GetAxis(InputIdentifier + "Horiz") * PlayerSpeed * Time.deltaTime;
             if (Mathf.Abs(transform.position.x + inputMovement) < Mathf.Abs(transform.position.x))
             {
                 strafeMovement = inputMovement;
@@ -46,11 +55,27 @@ public class P2Move : MonoBehaviour
         transform.position += totalMovement;
     }
 
+    public void SetupInputIdentifier()
+    {
+        if (ControllerType.Equals("Keyboard"))
+        {
+            InputIdentifier = "K";
+        }
+        else if (ControllerType.Equals("Xbox"))
+        {
+            InputIdentifier = "X" + InputNumber;
+        }
+        else if (ControllerType.Equals("PlayStation"))
+        {
+            InputIdentifier = "P" + InputNumber;
+        }
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ShockCollider"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else if (other.CompareTag("PowerupCollider"))
         {
