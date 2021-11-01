@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6168947775239025866}
   - component: {fileID: 6168947775239025869}
   - component: {fileID: 6374047348319789097}
+  - component: {fileID: 4574393645214398946}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Robot
@@ -195,3 +196,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4574393645214398946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6168947775239025871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cb675eb8d6ae2418557c314cdcf38c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerSpeed: 2
+  MaxX: 3.75
+  MaxZ: 4
+  PowerupCharges: 0
+  PlayerNumber: 1
+  ControllerType: Keyboard
+  InputIdentifier: 

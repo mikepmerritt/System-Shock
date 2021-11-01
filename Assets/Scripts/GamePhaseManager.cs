@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GamePhaseManager : MonoBehaviour
@@ -28,7 +29,10 @@ public class GamePhaseManager : MonoBehaviour
     public List<GeneratorUpdate> RowGenerators = new List<GeneratorUpdate>();
     public List<GeneratorUpdate> ColumnGenerators = new List<GeneratorUpdate>();
 
+    public PlayerMove Player1, Player2;
     public TMP_Text P1Charges, P2Charges, RoundText;
+
+    public static string Winner;
 
     public void Start()
     {
@@ -68,11 +72,36 @@ public class GamePhaseManager : MonoBehaviour
         }
         else // end of shock phase, remove neutral electricity and pick new ones
         {
+            GameObject[] RobotsLeft = GameObject.FindGameObjectsWithTag("Robot");
+            if (RobotsLeft.Length == 1)
+            {
+                Winner = "Player " + RobotsLeft[0].GetComponent<PlayerMove>().PlayerNumber + " won!";
+                SceneManager.LoadScene(0); // menu scene
+            }
+            else if (RobotsLeft.Length == 0)
+            {
+                Winner = "The game was a tie!";
+                SceneManager.LoadScene(0); // menu scene
+            }
             InShockPhase = false;
             PreshockTimer = PreshockLength;
             Round++;
-            P1Charges.SetText("P1 Charges: " + P1Move.PowerupCharges);
-            P2Charges.SetText("P2 Charges: " + P2Move.PowerupCharges);
+            if (Player1 == null)
+            {
+                P1Charges.SetText("P1 Charges: 0");
+            }
+            else
+            {
+                P1Charges.SetText("P1 Charges: " + Player1.PowerupCharges);
+            }
+            if (Player2 == null)
+            {
+                P2Charges.SetText("P2 Charges: 0");
+            }
+            else
+            {
+                P2Charges.SetText("P2 Charges: " + Player2.PowerupCharges);
+            }
             RoundText.SetText("Round " + Round);
             ChooseTiles(Round);
             ToggleAllPowerupTriggers(false);
