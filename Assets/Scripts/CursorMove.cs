@@ -8,9 +8,9 @@ public class CursorMove : MonoBehaviour
     public float CursorSpeed;
     public float MaxX, MaxZ;
     public TMP_Text ChargeCounter;
-    private string PlayerNumber;
-    private string InputIdentifier; // the string used in the axis name
-    private string PlayerColor;
+    public string PlayerNumber;
+    public string InputIdentifier; // the string used in the axis name
+    public string PlayerColor;
     public PlayerMove CorrespondingPlayer;
 
     private void Start()

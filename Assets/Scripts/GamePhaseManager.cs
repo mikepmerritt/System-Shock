@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GamePhaseManager : MonoBehaviour
@@ -30,6 +31,8 @@ public class GamePhaseManager : MonoBehaviour
 
     public PlayerMove Player1, Player2;
     public TMP_Text P1Charges, P2Charges, RoundText;
+
+    public static string Winner;
 
     public void Start()
     {
@@ -69,6 +72,17 @@ public class GamePhaseManager : MonoBehaviour
         }
         else // end of shock phase, remove neutral electricity and pick new ones
         {
+            GameObject[] RobotsLeft = GameObject.FindGameObjectsWithTag("Robot");
+            if (RobotsLeft.Length == 1)
+            {
+                Winner = "Player " + RobotsLeft[0].GetComponent<PlayerMove>().PlayerNumber + " won!";
+                SceneManager.LoadScene(0); // menu scene
+            }
+            else if (RobotsLeft.Length == 0)
+            {
+                Winner = "The game was a tie!";
+                SceneManager.LoadScene(0); // menu scene
+            }
             InShockPhase = false;
             PreshockTimer = PreshockLength;
             Round++;

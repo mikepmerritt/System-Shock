@@ -57,6 +57,18 @@ public class PlayerMove : MonoBehaviour
 
     public void SetupInputIdentifier()
     {
+        // fetch input type
+        if (PlayerNumber.Equals("1"))
+        {
+            InputNumber = MenuController.InputNumber1;
+            ControllerType = MenuController.ControllerType1;
+        }
+        else if (PlayerNumber.Equals("2"))
+        {
+            InputNumber = MenuController.InputNumber2;
+            ControllerType = MenuController.ControllerType2;
+        }
+        // set input type for use in axes
         if (ControllerType.Equals("Keyboard"))
         {
             InputIdentifier = "K";

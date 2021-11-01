@@ -1118,6 +1118,9 @@ MonoBehaviour:
   MaxX: 3.7
   MaxZ: 3.7
   ChargeCounter: {fileID: 1237536322}
+  PlayerNumber: 
+  InputIdentifier: 
+  PlayerColor: red
   CorrespondingPlayer: {fileID: 416453342}
 --- !u!1 &705507993
 GameObject:
@@ -1965,6 +1968,9 @@ MonoBehaviour:
   MaxX: 3.7
   MaxZ: 3.7
   ChargeCounter: {fileID: 593829168}
+  PlayerNumber: 
+  InputIdentifier: 
+  PlayerColor: blue
   CorrespondingPlayer: {fileID: 1214283891}
 --- !u!1001 &1363717994
 PrefabInstance:
@@ -2369,11 +2375,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4574393645214398946, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
       propertyPath: InputNumber
-      value: 1
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574393645214398946, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
+      propertyPath: PlayerNumber
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4574393645214398946, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
       propertyPath: ControllerType
-      value: Xbox
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6168947775239025864, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
       propertyPath: m_RootOrder
@@ -2481,8 +2491,8 @@ MonoBehaviour:
   - {fileID: 938741761}
   - {fileID: 493919136}
   - {fileID: 2037317314}
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
+  Player1: {fileID: 1214283891}
+  Player2: {fileID: 416453342}
   P1Charges: {fileID: 593829168}
   P2Charges: {fileID: 1237536322}
   RoundText: {fileID: 1531690853}
@@ -2783,7 +2793,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4574393645214398946, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
       propertyPath: InputNumber
-      value: 0
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574393645214398946, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
+      propertyPath: ControllerType
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6168947775239025864, guid: 89f4a16835474544eaba06da934eaf97, type: 3}
       propertyPath: m_RootOrder
