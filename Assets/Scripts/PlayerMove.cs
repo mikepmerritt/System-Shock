@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     public string InputIdentifier; // the string used in the axis name
     public string InputNumber; // 0 is for keyboard
     public string PlayerColor;
+    public GameObject PowerupParticles;
 
     private void Start()
     {
@@ -71,6 +72,10 @@ public class PlayerMove : MonoBehaviour
                         tile.UpdateTileStatus("player_danger_" + PlayerColor);
                         GamePhaseManager.TilesToShock.Add(tile);
                         PowerupCharges--;
+                        if (PowerupCharges < 1)
+                        {
+                            PowerupParticles.SetActive(false);
+                        }
                     }
                     else
                     {
@@ -118,6 +123,10 @@ public class PlayerMove : MonoBehaviour
         else if (other.CompareTag("PowerupCollider"))
         {
             PowerupCharges++;
+            if (PowerupCharges >= 1)
+            {
+                PowerupParticles.SetActive(true);
+            }
         }
     }
 }
