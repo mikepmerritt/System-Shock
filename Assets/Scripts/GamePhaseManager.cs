@@ -53,8 +53,6 @@ public class GamePhaseManager : MonoBehaviour
         }
 
         ChooseTiles(Round);
-
-        
     }
 
     public void Update()
@@ -69,7 +67,7 @@ public class GamePhaseManager : MonoBehaviour
                 {
                     if(!tile.TileStatus.Contains("player"))
                     {
-                        tile.Particles.SetActive(true);
+                        tile.Particles.GetComponent<ParticleSystem>().emissionRate = 5;
                     }
                 }
             }
@@ -121,10 +119,12 @@ public class GamePhaseManager : MonoBehaviour
         foreach (GeneratorUpdate rowGen in RowGenerators)
         {
             rowGen.MR.material = rowGen.NormalMaterial;
+            rowGen.GetComponentInChildren<ParticleSystem>().emissionRate = 0;
         }
         foreach (GeneratorUpdate colGen in ColumnGenerators)
         {
             colGen.MR.material = colGen.NormalMaterial;
+            colGen.GetComponentInChildren<ParticleSystem>().emissionRate = 0;
         }
         TilesToShock.Clear();
         PowerupTiles.Clear();
@@ -178,6 +178,7 @@ public class GamePhaseManager : MonoBehaviour
             ChosenRows.Add(chosenRow);
 
             RowGenerators[chosenRow].MR.material = RowGenerators[chosenRow].ShockMaterial;
+            RowGenerators[chosenRow].GetComponentInChildren<ParticleSystem>().emissionRate = 5;
 
             for (int col = 0; col < GridSize; col++)
             {
@@ -202,6 +203,7 @@ public class GamePhaseManager : MonoBehaviour
             ChosenColumns.Add(chosenCol);
 
             ColumnGenerators[chosenCol].MR.material = ColumnGenerators[chosenCol].ShockMaterial;
+            ColumnGenerators[chosenCol].GetComponentInChildren<ParticleSystem>().emissionRate = 5;
 
             for (int row = 0; row < GridSize; row++)
             {

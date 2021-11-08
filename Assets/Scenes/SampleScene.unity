@@ -1879,6 +1879,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5727850655073551500, guid: 58218a478e710e346a8097bdf71030e4, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7155665154805213176, guid: 58218a478e710e346a8097bdf71030e4, type: 3}
       propertyPath: m_Name
       value: GeneratorR0

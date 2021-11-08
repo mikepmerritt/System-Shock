@@ -20,35 +20,35 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = NormalMaterial;
             Shockbox.SetActive(false);
-            Particles.SetActive(false);
-            BlueParticles.SetActive(false);
-            RedParticles.SetActive(false);
+            Particles.GetComponent<ParticleSystem>().emissionRate = 0;
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 0;
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 0;
         }
         else if (TileStatus.Equals("neutral_shock"))
         {
             MR.material = ShockMaterial;
             Shockbox.SetActive(true);
-            Particles.SetActive(true);
+            Particles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_shock_blue"))
         {
             MR.material = BlueMaterial;
             Shockbox.SetActive(true);
-            BlueParticles.SetActive(true);
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_shock_red"))
         {
             MR.material = RedMaterial;
             Shockbox.SetActive(true);
-            RedParticles.SetActive(true);
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_danger_blue"))
         {
-            BlueParticles.SetActive(true);
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_danger_red"))
         {
-            RedParticles.SetActive(true);
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
     }
 
