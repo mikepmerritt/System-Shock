@@ -208,10 +208,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cb675eb8d6ae2418557c314cdcf38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerSpeed: 2
+  PlayerSpeed: 3
   MaxX: 3.75
   MaxZ: 4
   PowerupCharges: 0
   PlayerNumber: 1
   ControllerType: Keyboard
   InputIdentifier: 
+  InputNumber: 

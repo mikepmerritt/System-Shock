@@ -14,6 +14,38 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        if (ControllerType1 != null)
+        {
+            if(ControllerType1.Equals("Keyboard"))
+            {
+                Player1Dropdown.value = 0;
+            }
+            else if (ControllerType1.Equals("Xbox"))
+            {
+                Player1Dropdown.value = 1;
+            }
+            else if (ControllerType1.Equals("PlayStation"))
+            {
+                Player1Dropdown.value = 2;
+            }
+        }
+
+        if (ControllerType2 != null)
+        {
+            if (ControllerType2.Equals("Keyboard"))
+            {
+                Player2Dropdown.value = 0;
+            }
+            else if (ControllerType2.Equals("Xbox"))
+            {
+                Player2Dropdown.value = 1;
+            }
+            else if (ControllerType2.Equals("PlayStation"))
+            {
+                Player2Dropdown.value = 2;
+            }
+        }
+
         if (GamePhaseManager.Winner != null)
         {
             InfoText.SetText(GamePhaseManager.Winner);

@@ -34,13 +34,15 @@ public class GamePhaseManager : MonoBehaviour
 
     public static string Winner;
 
+    public List<int> DifficultyRounds = new List<int> {2, 4, 8, 12, 18}; // preset list of rounds for difficulty spikes
+
     public void Start()
     {
         Round = 1;
         InShockPhase = false;
         PreshockTimer = PreshockLength;
 
-        ShockRows = 0;
+        ShockRows = 1;
         ShockColumns = 0;
 
         // Construct tile dictionary for use later on
@@ -51,6 +53,8 @@ public class GamePhaseManager : MonoBehaviour
         }
 
         ChooseTiles(Round);
+
+        
     }
 
     public void Update()
@@ -137,8 +141,8 @@ public class GamePhaseManager : MonoBehaviour
         ChosenRows.Clear();
         ChosenColumns.Clear();
 
-        // Add new rows and columns over time (every four rounds)
-        if ((round - 1) % 4 == 0)
+        // Add new rows and columns over time (if the round number matches a value in the list of rounds for the difficulty to increase on)
+        if (DifficultyRounds.Contains(round))
         {
             if (ShockRows - ShockColumns >= 2 && ShockColumns < GridSize - 1) // if there are two more rows than columns, add a column
             {
@@ -159,8 +163,8 @@ public class GamePhaseManager : MonoBehaviour
             // else rows and columns are maxed, do nothing because there is only one safe tile as is
         }
 
-        // Place a powerup tile every six turns
-        if ((round - 1) % 6 == 0 && round != 1)
+        // Place a powerup tile every three turns
+        if ((round - 1) % 3 == 0 && round != 1)
         {
             int powerupRow = Random.Range(0, GridSize);
             int powerupColumn = Random.Range(0, GridSize);
