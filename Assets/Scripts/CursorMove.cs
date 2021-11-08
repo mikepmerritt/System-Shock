@@ -72,7 +72,7 @@ public class CursorMove : MonoBehaviour
                     if (tile != null)
                     {
                         tile.UpdateTileStatus("player_shock_" + PlayerColor);
-                        GamePhaseManager.PlayerShockedTiles.Add(tile);
+                        GamePhaseManager.TilesToShock.Add(tile);
                         CorrespondingPlayer.PowerupCharges--;
                         ChargeCounter.SetText("P" + PlayerNumber + " Charges: " + CorrespondingPlayer.PowerupCharges);
                     }

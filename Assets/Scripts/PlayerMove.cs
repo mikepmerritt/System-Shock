@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     public string ControllerType;
     public string InputIdentifier; // the string used in the axis name
     public string InputNumber; // 0 is for keyboard
+    public string PlayerColor;
 
     private void Start()
     {
@@ -53,6 +54,31 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 totalMovement = (transform.forward * forwardMovement) + (transform.right * strafeMovement);
         transform.position += totalMovement;
+
+        // Use powerup charge
+        if (Input.GetAxis(InputIdentifier + "Use") == 1 && PowerupCharges > 0)
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, -transform.up, out hit))
+            {
+                GameObject hitObject = hit.collider.gameObject;
+                if (hitObject.CompareTag("Tile"))
+                {
+                    TileBehavior tile = hitObject.GetComponent<TileBehavior>();
+                    if (tile != null)
+                    {
+                        tile.UpdateTileStatus("player_danger_" + PlayerColor);
+                        GamePhaseManager.TilesToShock.Add(tile);
+                        PowerupCharges--;
+                    }
+                    else
+                    {
+                        Debug.LogError("Tile not found!");
+                    }
+                }
+            }
+        }
     }
 
     public void SetupInputIdentifier()

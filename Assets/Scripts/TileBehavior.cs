@@ -25,6 +25,7 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = ShockMaterial;
             Shockbox.SetActive(true);
+            // yellow particles
         }
         else if (TileStatus.Equals("player_shock_blue"))
         {
@@ -35,6 +36,21 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = RedMaterial;
             Shockbox.SetActive(true);
+        }
+        else if (TileStatus.Equals("player_danger_blue"))
+        {
+            // blue particles
+        }
+        else if (TileStatus.Equals("player_danger_red"))
+        {
+            // red particles
+        }
+        else if (TileStatus.Equals("danger"))
+        {
+            if(GamePhaseManager.ShockTimer < 1f)
+            {
+                // yellow particles
+            }
         }
     }
 
@@ -58,4 +74,5 @@ public class TileBehavior : MonoBehaviour
     // "neutral_shock" = danger tile in shock phase
     // "powerup_lightning" = powerup tile for lightning strike
     // "player_shock_<color>" = lighting shock caused by a player, <color> is color of tile
+    // "player_danger_<color>" = lighting shock to be applied later caused by a player, <color> is color of tile
 }
