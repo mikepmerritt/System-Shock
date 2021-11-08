@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6168947775239025869}
   - component: {fileID: 6374047348319789097}
   - component: {fileID: 4574393645214398946}
+  - component: {fileID: 8695712198208507674}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Robot
@@ -219,6 +220,23 @@ MonoBehaviour:
   InputNumber: 
   PlayerColor: 
   PowerupParticles: {fileID: 8266823178108651290}
+--- !u!114 &8695712198208507674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6168947775239025871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250cf79ed990294eb9aadeb25c259d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputIdentifier: 
+  PlayerID: P1
+  RobotSprite: {fileID: 862582471338345965}
+  Robot: {fileID: 4574393645214398946}
+  A: {fileID: 0}
 --- !u!1 &8266823178108651290
 GameObject:
   m_ObjectHideFlags: 0

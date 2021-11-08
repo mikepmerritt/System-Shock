@@ -20,6 +20,7 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = NormalMaterial;
             Shockbox.SetActive(false);
+            Powerupbox.SetActive(false);
             Particles.GetComponent<ParticleSystem>().emissionRate = 0;
             BlueParticles.GetComponent<ParticleSystem>().emissionRate = 0;
             RedParticles.GetComponent<ParticleSystem>().emissionRate = 0;
