@@ -11,7 +11,7 @@ public class TileBehavior : MonoBehaviour
     public string Powerup; // the powerup on the tile
     public MeshRenderer MR;
     public Material NormalMaterial, ShockMaterial, BlueMaterial, RedMaterial;
-    public GameObject Shockbox, Powerupbox, PowerupSprite;
+    public GameObject Shockbox, Powerupbox, PowerupSprite, Particles, BlueParticles, RedParticles;
 
     public void UpdateTileStatus (string newStatus)
     {
@@ -20,37 +20,35 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = NormalMaterial;
             Shockbox.SetActive(false);
+            Particles.SetActive(false);
+            BlueParticles.SetActive(false);
+            RedParticles.SetActive(false);
         }
         else if (TileStatus.Equals("neutral_shock"))
         {
             MR.material = ShockMaterial;
             Shockbox.SetActive(true);
-            // yellow particles
+            Particles.SetActive(true);
         }
         else if (TileStatus.Equals("player_shock_blue"))
         {
             MR.material = BlueMaterial;
             Shockbox.SetActive(true);
+            BlueParticles.SetActive(true);
         }
         else if (TileStatus.Equals("player_shock_red"))
         {
             MR.material = RedMaterial;
             Shockbox.SetActive(true);
+            RedParticles.SetActive(true);
         }
         else if (TileStatus.Equals("player_danger_blue"))
         {
-            // blue particles
+            BlueParticles.SetActive(true);
         }
         else if (TileStatus.Equals("player_danger_red"))
         {
-            // red particles
-        }
-        else if (TileStatus.Equals("danger"))
-        {
-            if(GamePhaseManager.ShockTimer < 1f)
-            {
-                // yellow particles
-            }
+            RedParticles.SetActive(true);
         }
     }
 

@@ -2444,7 +2444,6 @@ MonoBehaviour:
   GridSize: 4
   ChosenRows: 
   ChosenColumns: 
-  TilesToShock: []
   PowerupTiles: []
   RowGenerators:
   - {fileID: 564973834}

@@ -12,7 +12,7 @@ public class GamePhaseManager : MonoBehaviour
     public float PreshockLength;
     public float PreshockTimer;
     public float ShockLength;
-    public static float ShockTimer;
+    public float ShockTimer;
     public static bool InShockPhase;
 
     public int ShockRows;
@@ -37,6 +37,7 @@ public class GamePhaseManager : MonoBehaviour
 
     public void Start()
     {
+        TilesToShock.Clear();
         Round = 1;
         InShockPhase = false;
         PreshockTimer = PreshockLength;
@@ -61,6 +62,17 @@ public class GamePhaseManager : MonoBehaviour
         if (!InShockPhase && PreshockTimer > 0) // player movement phase
         {
             PreshockTimer -= Time.deltaTime;
+            // make particles appear on shock tiles close to end of phase
+            if(PreshockTimer < 1f)
+            {
+                foreach (TileBehavior tile in TilesToShock)
+                {
+                    if(!tile.TileStatus.Contains("player"))
+                    {
+                        tile.Particles.SetActive(true);
+                    }
+                }
+            }
         }
         else if (!InShockPhase && PreshockTimer <= 0) // end of player movement phase, place neutral electricity
         {
