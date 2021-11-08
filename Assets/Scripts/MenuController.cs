@@ -11,9 +11,12 @@ public class MenuController : MonoBehaviour
     public static string InputNumber1, InputNumber2;
     public TMP_Dropdown Player1Dropdown, Player2Dropdown;
     public TMP_Text InfoText;
+    public Toggle SurvivorToggle;
+    public static bool SurvivorMode = false;
 
     private void Start()
     {
+        // save and restore P1 input method on reload
         if (ControllerType1 != null)
         {
             if(ControllerType1.Equals("Keyboard"))
@@ -30,6 +33,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
+        // save and restore P2 input method on reload
         if (ControllerType2 != null)
         {
             if (ControllerType2.Equals("Keyboard"))
@@ -46,6 +50,13 @@ public class MenuController : MonoBehaviour
             }
         }
 
+        // save and restore survivor mode status on reload
+        if (SurvivorMode)
+        {
+            SurvivorToggle.isOn = true;
+        }
+
+        // set text box to say who the winner of the last game was on reload
         if (GamePhaseManager.Winner != null)
         {
             InfoText.SetText(GamePhaseManager.Winner);
@@ -106,5 +117,10 @@ public class MenuController : MonoBehaviour
             SceneManager.LoadScene(1); // game scene
         }
         
+    }
+
+    public void ToggleSurvivorMode(bool status)
+    {
+        SurvivorMode = status;
     }
 }

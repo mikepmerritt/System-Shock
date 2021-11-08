@@ -37,6 +37,7 @@ public class GamePhaseManager : MonoBehaviour
 
     public void Start()
     {
+        Winner = null;
         TilesToShock.Clear();
         Round = 1;
         InShockPhase = false;
@@ -89,11 +90,17 @@ public class GamePhaseManager : MonoBehaviour
             if (RobotsLeft.Length == 1)
             {
                 Winner = "Player " + RobotsLeft[0].GetComponent<PlayerMove>().PlayerNumber + " won!";
-                SceneManager.LoadScene(0); // menu scene
+                if(!MenuController.SurvivorMode)
+                {
+                    SceneManager.LoadScene(0); // menu scene
+                }
             }
             else if (RobotsLeft.Length == 0)
             {
-                Winner = "The game was a tie!";
+                if (!MenuController.SurvivorMode || Winner == null)
+                {
+                    Winner = "The game was a tie!";
+                }
                 SceneManager.LoadScene(0); // menu scene
             }
             InShockPhase = false;
