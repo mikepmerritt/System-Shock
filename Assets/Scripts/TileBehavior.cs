@@ -11,7 +11,7 @@ public class TileBehavior : MonoBehaviour
     public string Powerup; // the powerup on the tile
     public MeshRenderer MR;
     public Material NormalMaterial, ShockMaterial, BlueMaterial, RedMaterial;
-    public GameObject Shockbox, Powerupbox, PowerupSprite;
+    public GameObject Shockbox, Powerupbox, PowerupSprite, Particles, BlueParticles, RedParticles;
 
     public void UpdateTileStatus (string newStatus)
     {
@@ -20,21 +20,36 @@ public class TileBehavior : MonoBehaviour
         {
             MR.material = NormalMaterial;
             Shockbox.SetActive(false);
+            Powerupbox.SetActive(false);
+            Particles.GetComponent<ParticleSystem>().emissionRate = 0;
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 0;
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 0;
         }
         else if (TileStatus.Equals("neutral_shock"))
         {
             MR.material = ShockMaterial;
             Shockbox.SetActive(true);
+            Particles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_shock_blue"))
         {
             MR.material = BlueMaterial;
             Shockbox.SetActive(true);
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
         else if (TileStatus.Equals("player_shock_red"))
         {
             MR.material = RedMaterial;
             Shockbox.SetActive(true);
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 5;
+        }
+        else if (TileStatus.Equals("player_danger_blue"))
+        {
+            BlueParticles.GetComponent<ParticleSystem>().emissionRate = 5;
+        }
+        else if (TileStatus.Equals("player_danger_red"))
+        {
+            RedParticles.GetComponent<ParticleSystem>().emissionRate = 5;
         }
     }
 
@@ -58,4 +73,5 @@ public class TileBehavior : MonoBehaviour
     // "neutral_shock" = danger tile in shock phase
     // "powerup_lightning" = powerup tile for lightning strike
     // "player_shock_<color>" = lighting shock caused by a player, <color> is color of tile
+    // "player_danger_<color>" = lighting shock to be applied later caused by a player, <color> is color of tile
 }

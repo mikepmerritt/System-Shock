@@ -22,25 +22,28 @@ public class GamePhaseManager : MonoBehaviour
 
     public List<int> ChosenRows;
     public List<int> ChosenColumns;
-    public List<TileBehavior> TilesToShock = new List<TileBehavior>();
+    public static List<TileBehavior> TilesToShock = new List<TileBehavior>();
     public List<TileBehavior> PowerupTiles = new List<TileBehavior>();
-    public static List<TileBehavior> PlayerShockedTiles = new List<TileBehavior>();
 
     public List<GeneratorUpdate> RowGenerators = new List<GeneratorUpdate>();
     public List<GeneratorUpdate> ColumnGenerators = new List<GeneratorUpdate>();
 
     public PlayerMove Player1, Player2;
-    public TMP_Text P1Charges, P2Charges, RoundText;
+    public TMP_Text RoundText;
 
     public static string Winner;
 
+    public List<int> DifficultyRounds = new List<int> {2, 4, 8, 12, 18}; // preset list of rounds for difficulty spikes
+
     public void Start()
     {
+        Winner = null;
+        TilesToShock.Clear();
         Round = 1;
         InShockPhase = false;
         PreshockTimer = PreshockLength;
 
-        ShockRows = 0;
+        ShockRows = 1;
         ShockColumns = 0;
 
         // Construct tile dictionary for use later on
@@ -58,6 +61,17 @@ public class GamePhaseManager : MonoBehaviour
         if (!InShockPhase && PreshockTimer > 0) // player movement phase
         {
             PreshockTimer -= Time.deltaTime;
+            // make particles appear on shock tiles close to end of phase
+            if(PreshockTimer < 1f)
+            {
+                foreach (TileBehavior tile in TilesToShock)
+                {
+                    if(!tile.TileStatus.Contains("player"))
+                    {
+                        tile.Particles.GetComponent<ParticleSystem>().emissionRate = 5;
+                    }
+                }
+            }
         }
         else if (!InShockPhase && PreshockTimer <= 0) // end of player movement phase, place neutral electricity
         {
@@ -76,32 +90,22 @@ public class GamePhaseManager : MonoBehaviour
             if (RobotsLeft.Length == 1)
             {
                 Winner = "Player " + RobotsLeft[0].GetComponent<PlayerMove>().PlayerNumber + " won!";
-                SceneManager.LoadScene(0); // menu scene
+                if(!MenuController.SurvivorMode)
+                {
+                    SceneManager.LoadScene(0); // menu scene
+                }
             }
             else if (RobotsLeft.Length == 0)
             {
-                Winner = "The game was a tie!";
+                if (!MenuController.SurvivorMode || Winner == null)
+                {
+                    Winner = "The game was a tie!";
+                }
                 SceneManager.LoadScene(0); // menu scene
             }
             InShockPhase = false;
             PreshockTimer = PreshockLength;
             Round++;
-            if (Player1 == null)
-            {
-                P1Charges.SetText("P1 Charges: 0");
-            }
-            else
-            {
-                P1Charges.SetText("P1 Charges: " + Player1.PowerupCharges);
-            }
-            if (Player2 == null)
-            {
-                P2Charges.SetText("P2 Charges: 0");
-            }
-            else
-            {
-                P2Charges.SetText("P2 Charges: " + Player2.PowerupCharges);
-            }
             RoundText.SetText("Round " + Round);
             ChooseTiles(Round);
             ToggleAllPowerupTriggers(false);
@@ -119,26 +123,23 @@ public class GamePhaseManager : MonoBehaviour
         {
             tile.AddPowerup("none");
         }
-        foreach (TileBehavior tile in PlayerShockedTiles)
-        {
-            tile.UpdateTileStatus("normal");
-        }
         foreach (GeneratorUpdate rowGen in RowGenerators)
         {
             rowGen.MR.material = rowGen.NormalMaterial;
+            rowGen.GetComponentInChildren<ParticleSystem>().emissionRate = 0;
         }
         foreach (GeneratorUpdate colGen in ColumnGenerators)
         {
             colGen.MR.material = colGen.NormalMaterial;
+            colGen.GetComponentInChildren<ParticleSystem>().emissionRate = 0;
         }
         TilesToShock.Clear();
         PowerupTiles.Clear();
-        PlayerShockedTiles.Clear();
         ChosenRows.Clear();
         ChosenColumns.Clear();
 
-        // Add new rows and columns over time (every four rounds)
-        if ((round - 1) % 4 == 0)
+        // Add new rows and columns over time (if the round number matches a value in the list of rounds for the difficulty to increase on)
+        if (DifficultyRounds.Contains(round))
         {
             if (ShockRows - ShockColumns >= 2 && ShockColumns < GridSize - 1) // if there are two more rows than columns, add a column
             {
@@ -159,8 +160,8 @@ public class GamePhaseManager : MonoBehaviour
             // else rows and columns are maxed, do nothing because there is only one safe tile as is
         }
 
-        // Place a powerup tile every six turns
-        if ((round - 1) % 6 == 0 && round != 1)
+        // Place a powerup tile every three turns
+        if ((round - 1) % 3 == 0 && round != 1)
         {
             int powerupRow = Random.Range(0, GridSize);
             int powerupColumn = Random.Range(0, GridSize);
@@ -184,6 +185,7 @@ public class GamePhaseManager : MonoBehaviour
             ChosenRows.Add(chosenRow);
 
             RowGenerators[chosenRow].MR.material = RowGenerators[chosenRow].ShockMaterial;
+            RowGenerators[chosenRow].GetComponentInChildren<ParticleSystem>().emissionRate = 5;
 
             for (int col = 0; col < GridSize; col++)
             {
@@ -208,12 +210,13 @@ public class GamePhaseManager : MonoBehaviour
             ChosenColumns.Add(chosenCol);
 
             ColumnGenerators[chosenCol].MR.material = ColumnGenerators[chosenCol].ShockMaterial;
+            ColumnGenerators[chosenCol].GetComponentInChildren<ParticleSystem>().emissionRate = 5;
 
             for (int row = 0; row < GridSize; row++)
             {
                 TileBehavior chosenTile;
                 GridTiles.TryGetValue(new Vector2Int(row, chosenCol), out chosenTile);
-                if (!chosenTile.TileStatus.Contains("player_shock"))
+                if (!chosenTile.TileStatus.Contains("player_danger"))
                 {
                     chosenTile.UpdateTileStatus("danger");
                     TilesToShock.Add(chosenTile);
@@ -226,7 +229,18 @@ public class GamePhaseManager : MonoBehaviour
     {
         foreach (TileBehavior tile in TilesToShock)
         {
-            tile.UpdateTileStatus("neutral_shock");
+            if(tile.TileStatus.Equals("danger"))
+            {
+                tile.UpdateTileStatus("neutral_shock");
+            }
+            else if (tile.TileStatus.Equals("player_danger_blue"))
+            {
+                tile.UpdateTileStatus("player_shock_blue");
+            }
+            else if (tile.TileStatus.Equals("player_danger_red"))
+            {
+                tile.UpdateTileStatus("player_shock_red");
+            }
         }
     }
 
