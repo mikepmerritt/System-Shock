@@ -123,7 +123,7 @@ public class PlayerMove : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        else if (other.CompareTag("PowerupCollider"))
+        if (other.CompareTag("PowerupCollider"))
         {
             PowerupCharges++;
             if (PowerupCharges >= 1)
