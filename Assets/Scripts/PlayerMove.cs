@@ -118,7 +118,10 @@ public class PlayerMove : MonoBehaviour
     {
         if (other.CompareTag("ShockCollider"))
         {
-            gameObject.SetActive(false);
+            if(!other.GetComponentInParent<TileBehavior>().TileStatus.Contains(PlayerColor))
+            {
+                gameObject.SetActive(false);
+            }
         }
         else if (other.CompareTag("PowerupCollider"))
         {
